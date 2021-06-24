@@ -1,0 +1,17 @@
+.form__input{
+  display: block;
+  margin: 0 auto 30px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #CCCCCC;
+  background: #000;
+  border: 0;
+  border-bottom: 2px solid #CCCCCC;
+  min-width: 360px;
+  height: 30px;
+  outline: none;
+}
+

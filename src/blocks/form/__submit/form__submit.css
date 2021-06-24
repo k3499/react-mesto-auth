@@ -1,0 +1,9 @@
+.form__submit{
+  width: 360px;
+  height: 50px;
+  background: #FFFFFF;
+  border-radius: 2px;
+  color:#000;
+  border: 0;
+  cursor: pointer;
+}
