@@ -13,7 +13,7 @@ function InfoTooltip({isRegistered, isOpen, onClose}) {
       isOpen ?
       `popup popup_tooltip popup_opened` :
       `popup popup_tooltip`}>
-    <div  className={`popup__container`}>
+    <div  className={`popup__container-tool`}>
       <img
         src={ isRegistered ? loginOk : loginErr }
         alt="ok"

@@ -13,7 +13,7 @@ import ImagePopup from './ImagePopup';
 import InfoTooltip from './InfoTooltip';
 import {api} from '../utils/api';
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
-import * as auth from '../utils/UserAuth';
+import * as auth from '../utils/userAuth';
 import { setTkn, getTkn, removeTkn } from '../utils/token'
 
 function App() {
@@ -35,10 +35,14 @@ function App() {
   const handleCheckToken = () => {
     const token = getTkn();
     if (token) {
-      auth.getInfo(token).then((getInfo) => {
+      auth.getInfo(token)
+      .then((getInfo) => {
         setLoggedIn(true);
         setHeaderEmail(getInfo.data.email);
         history.push('/');
+      })
+      .catch((err) => {
+        return console.log(err)
       });
     }
     return token;
@@ -55,10 +59,9 @@ function App() {
 
 
     React.useEffect(() => {
-      if(handleCheckToken()) {
-        userData();
-      }
-    }, [headerEmail]);
+      handleCheckToken()
+      userData();
+    }, []);
   
 
     const handleLogin = (data) => {

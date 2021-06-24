@@ -2,24 +2,25 @@
 import React from 'react';
 
 function Login({ handleLogin}) {
-  const emailRef = React.useRef('');
-  const passwordRef = React.useRef('');
-  const [error, setError] = React.useState(true);
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
+      email: email,
+      password: password,
     };
     return handleLogin(data);
   };
 
-  function handleChange(evt) {
-      if(emailRef.current.value && passwordRef.current.value){
-        setError(false);
-      }
+  function handleChangeEmail(evt) {
+    setEmail(evt.target.value);
   }
+  function handleChangePass(evt) {
+    setPassword(evt.target.value);
+}
+
 
   return(
     <>
@@ -27,10 +28,12 @@ function Login({ handleLogin}) {
       <h2 className="form__title">Логин</h2>
       <form className="form__form" onSubmit={handleSubmit}>
         <div className="form__input-box">
-          <input ref={emailRef} type="email" placeholder="Email" onChange={handleChange} name="eml" className="form__input form__input_email" />
-          <input ref={passwordRef} type="password" placeholder="Пароль" onChange={handleChange} name="pass" className="form__input form__input_pass" />
+          <input type="email" placeholder="Email" onChange={handleChangeEmail} name="eml" className="form__input form__input_email" />
+          <input type="password" placeholder="Пароль" onChange={handleChangePass} name="pass" className="form__input form__input_pass" />
         </div>
-         { error ? <button type="submit" className="form__submit form__disabled" disabled >Войти</button> : <button type="submit" className="form__submit" >Войти</button>} 
+          <button type="submit" className={(!email || !password)
+          ? "form__submit form__disabled"
+          : "form__submit" } disabled={!email || !password} >Войти</button>
       </form>
     </section>
     </ >

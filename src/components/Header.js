@@ -4,10 +4,8 @@ import { Link, Route, Switch } from 'react-router-dom';
 
 function Header(props) {
   return (
-    <Switch>
-      <Route path="*">
         <header className="header">
-          <a href="#" target="_self"><img className="logo" src={logo} alt="Логотип"/></a>
+          <Link to='/'><img className="logo" src={logo} alt="Логотип"/></Link>
           <Switch>
             <Route path="/" exact>
               <div className="header__info">
@@ -38,8 +36,6 @@ function Header(props) {
             </Route>
           </Switch>
         </header>
-      </Route>
-    </Switch>
   );
   }
 
