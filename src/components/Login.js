@@ -28,8 +28,8 @@ function Login({ handleLogin}) {
       <h2 className="form__title">Логин</h2>
       <form className="form__form" onSubmit={handleSubmit}>
         <div className="form__input-box">
-          <input type="email" placeholder="Email" onChange={handleChangeEmail} name="eml" className="form__input form__input_email" />
-          <input type="password" placeholder="Пароль" onChange={handleChangePass} name="pass" className="form__input form__input_pass" />
+          <input type="email" placeholder="Email" value={email} onChange={handleChangeEmail} name="eml" className="form__input form__input_email" />
+          <input type="password" placeholder="Пароль" value={password} onChange={handleChangePass} name="pass" className="form__input form__input_pass" />
         </div>
           <button type="submit" className={(!email || !password)
           ? "form__submit form__disabled"
