@@ -106,9 +106,8 @@ changeLikeCardStatus(cardId, isLiked) {
 }
 //подключаем апи
 const api = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-23/',
+  url: 'api.mesto.k3499.nomoredomains.club/',
   headers: {
-    authorization: '64388478-85d7-41e7-ab69-a698cc4b7b2e',
     'content-type': 'application/json'
   }});
 export { api, Api }
