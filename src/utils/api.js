@@ -1,3 +1,4 @@
+import { setTkn, getTkn, removeTkn } from '../utils/token';
 class Api {
   constructor(config){
     this._url = config.url;
@@ -11,9 +12,13 @@ class Api {
   }
     //загрузка карточек с сервера
   getInitialCards(){
+    const token = getTkn();
     return fetch(`${this._url}cards`, {
        method: 'GET',
-       headers: this._headers
+       headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` //Кидаем токен 
+      }
      })
      .then((res) => {
         return this._resOk(res);
@@ -22,9 +27,13 @@ class Api {
 
     //загрузка информации о пользователе
   getUserInfo(){
+    const token = localStorage.getItem('jwt');
     return fetch(`${this._url}users/me`, {
       method: 'GET',
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` //Кидаем токен 
+      }
     })
     .then((res) => {
       return this._resOk(res);
@@ -32,9 +41,13 @@ class Api {
   }
     //отправка новой информации о пользователе
   setUserInfo(userData){
+    const token = getTkn();
     return fetch(`${this._url}users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` //Кидаем токен 
+      },
       body: JSON.stringify({
         name: userData.name,
         about: userData.about
@@ -46,9 +59,13 @@ class Api {
   }
     //добавление карточек на сервер
   addCard(inputData){
+    const token = getTkn();
     return fetch(`${this._url}cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` //Кидаем токен 
+      },
       body: JSON.stringify({
         name: inputData.name,
         link: inputData.link
@@ -62,17 +79,24 @@ class Api {
 
 //смена статуса лайка
 changeLikeCardStatus(cardId, isLiked) {
+  const token = getTkn();
   if (isLiked) {
     return fetch(`${this._url}cards/likes/${cardId}`, {
       method: 'PUT',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` //Кидаем токен 
+      },
     }).then((res) => {
       return this._resOk(res);
      })
   } else {
     return fetch(`${this._url}cards/likes/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` //Кидаем токен 
+      },
     }).then((res) => {
       return this._resOk(res);
      })
@@ -82,9 +106,13 @@ changeLikeCardStatus(cardId, isLiked) {
     
     //Удаление карточки с сервера
   removeCard(cardId){
+    const token = getTkn();
     return fetch(`${this._url}cards/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` //Кидаем токен 
+      }
     })
     .then((res) => {
       return this._resOk(res);
@@ -92,9 +120,13 @@ changeLikeCardStatus(cardId, isLiked) {
   }
     //загрузка аватара пользователя
   avatarUpl(inputData){
+    const token = getTkn();
     return fetch(`${this._url}users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` //Кидаем токен 
+      },
       body: JSON.stringify({
         avatar: inputData.avatar,
       })
@@ -106,8 +138,9 @@ changeLikeCardStatus(cardId, isLiked) {
 }
 //подключаем апи
 const api = new Api({
-  url: 'api.mesto.k3499.nomoredomains.club/',
+  url: 'https://api.mesto.k3499.nomoredomains.club/',
   headers: {
-    'content-type': 'application/json'
+    'content-type': 'application/json',
+    
   }});
 export { api, Api }

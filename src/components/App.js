@@ -33,13 +33,13 @@ function App() {
 
 
   const handleCheckToken = () => {
-    const token = getTkn();
-    if (token) {
-      auth.getInfo(token)
+    const token = getTkn();  //берем токен из локального
+    if (token) { //если он есть
+      auth.getInfo(token) //делаем запрос на аутентификацию
       .then((getInfo) => {
-        setLoggedIn(true);
-        setHeaderEmail(getInfo.data.email);
-        history.push('/');
+        setLoggedIn(true); // ставим тру в залогинен
+        setHeaderEmail(getInfo.data.email); // Берем инфорацию об Email
+        history.push('/'); //Кидаем на главную
       })
       .catch((err) => {
         return console.log(err)
@@ -47,26 +47,29 @@ function App() {
     }
     return token;
   };
+  React.useEffect(() => {
+    handleCheckToken();  //выполняем ту, что выше
+    console.log(loggedIn);
+  }, []);
 
-  const userData = () => {
-      Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([ userData, cards  ]) => { 
-        setCurrentUser(userData); 
-        setCards(cards)
-      })
-      .catch((err) => console.log(err))
+  React.useEffect(() => {
+    if (loggedIn){ // Если залогинены 
+      Promise.all([api.getUserInfo(), api.getInitialCards()]) //делаем запрос на информацию о юзере и карточках
+        .then(([ userData, cards  ]) => { 
+          setCurrentUser(userData); //ставим юзера
+          setCards(cards) //ставим карты
+        })
+        .catch((err) => console.log(err))
     }
+  }, [loggedIn]);
 
 
-    React.useEffect(() => {
-      handleCheckToken()
-      userData();
-    }, []);
   
 
     const handleLogin = (data) => {
       auth.auth(data)
       .then((res) => {
+
         if (res.token) {
           setLoggedIn(true)
           setHeaderEmail(data.email)
